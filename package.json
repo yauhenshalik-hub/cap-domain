@@ -1,0 +1,25 @@
+{
+    "name": "cap-fc",
+    "version": "3.0.0",
+    "description": "SAP CAP Field Control Plugin - dynamic field visibility, editability and validation",
+    "main": "index.js",
+    "scripts": {
+        "test": "cd tests && npx jest --silent=true"
+    },
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/yauhenshalik-hub/cap-fc.git"
+    },
+    "bugs": {
+        "url": "https://github.com/yauhenshalik-hub/cap-fc/issues"
+    },
+    "homepage": "https://github.com/yauhenshalik-hub/cap-fc#readme",
+    "dependencies": {},
+    "peerDependencies": {
+        "@sap/cds": ">=10"
+    },
+    "workspaces": [
+        "tests"
+    ]
+}
