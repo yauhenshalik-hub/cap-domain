@@ -1,5 +1,5 @@
 const cds = require('@sap/cds');
-const { execAfterREADHandler, execUPDATEHandler, validateAndThowErrorsIfExists } = require('cap-fc');
+const { execAfterREADHandler, execUPDATEHandler, validateAndThowErrorsIfExists } = require('cap-domain');
 
 class CatalogService extends cds.ApplicationService {
     init() {

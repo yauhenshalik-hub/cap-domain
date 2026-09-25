@@ -1,4 +1,4 @@
-# cap-fc - SAP CAP Field Control Plugin
+# cap-domain - SAP CAP Field Control Plugin
 
 A SAP CAP plugin that provides dynamic field control: it calculates OData `Common.FieldControl`
 values (Mandatory / Optional / ReadOnly / Hidden) at runtime and enforces matching server-side
@@ -10,7 +10,7 @@ Requires `@sap/cds` >= 10.
 ## Installation
 
 ```sh
-npm install cap-fc
+npm install cap-domain
 ```
 
 ## Quick Start
@@ -20,7 +20,7 @@ npm install cap-fc
 ```json
 {
   "cds": {
-    "enable:capfc:plugin": true
+    "enable:capdomain:plugin": true
   }
 }
 ```
@@ -32,8 +32,8 @@ your app's i18n bundle (e.g. `_i18n/i18n.properties`) - otherwise the raw key is
 of a readable message:
 
 ```properties
-capfc.validation.message.readOnly={0} is Read-only field
-capfc.validation.message.required={0} is Required field
+capdomain.validation.message.readOnly={0} is Read-only field
+capdomain.validation.message.required={0} is Required field
 ```
 
 ### 3. Create a field control configuration
@@ -41,7 +41,7 @@ capfc.validation.message.required={0} is Required field
 Create `srv/@FCDefinitions/MyEntity.js`:
 
 ```javascript
-const { fieldControlDictionary } = require('cap-fc');
+const { fieldControlDictionary } = require('cap-domain');
 
 const fieldControlConfigurations = {
   mandatory: {
@@ -89,7 +89,7 @@ annotate MyService.MyEntity with {
 ```
 
 > Every field that clients are allowed to change must carry its own `@Common.FieldControl`
-> annotation. By default (`enable:capfc:blockUnannotatedValueChanges`), updates to any
+> annotation. By default (`enable:capdomain:blockUnannotatedValueChanges`), updates to any
 > unannotated field are silently dropped - see [Configuration](#configuration).
 
 ### 5. Wire up the handlers
@@ -101,7 +101,7 @@ const {
   execAfterREADHandler, 
   execUPDATEHandler, 
   bindEntityHandlers
-} = require('cap-fc');
+} = require('cap-domain');
 
 module.exports = (srv) => {
   const { MyEntity } = srv.entities;
@@ -131,22 +131,22 @@ no generic hook equivalent to `execUPDATEHandler` for creates.
 ```json
 {
   "cds": {
-    "enable:capfc:plugin": true,
-    "enable:capfc:liveValidations": true,
-    "enable:capfc:autoErase": true,
-    "enable:capfc:defaultFCValue": 3,
-    "enable:capfc:blockUnannotatedValueChanges": true
+    "enable:capdomain:plugin": true,
+    "enable:capdomain:liveValidations": true,
+    "enable:capdomain:autoErase": true,
+    "enable:capdomain:defaultFCValue": 3,
+    "enable:capdomain:blockUnannotatedValueChanges": true
   }
 }
 ```
 
 | Variable | Default | Effect |
 |---|---|---|
-| `enable:capfc:plugin` | `false` | Activates the CDS plugin that wires field control metadata onto annotated entities. |
-| `enable:capfc:liveValidations` | `true` | For a request with no persisted record yet (`CREATE`), validates the whole entity using empty defaults for any field missing from the payload, so mandatory checks fire progressively as a form is filled in. For an existing record (`UPDATE`), untouched fields always keep their persisted values regardless of this setting. |
-| `enable:capfc:autoErase` | `true` | Nulls out a field's value as soon as its field control becomes ReadOnly/Hidden. |
-| `enable:capfc:defaultFCValue` | `3` (Optional) | Fallback field control value used when a field has no explicit calculator. |
-| `enable:capfc:blockUnannotatedValueChanges` | `true` | Drops any incoming field that has no `@Common.FieldControl` annotation of its own. This is a strict, secure-by-default setting: every editable field - including plain "trigger" fields that only influence *other* fields' field control - must be annotated. |
+| `enable:capdomain:plugin` | `false` | Activates the CDS plugin that wires field control metadata onto annotated entities. |
+| `enable:capdomain:liveValidations` | `true` | For a request with no persisted record yet (`CREATE`), validates the whole entity using empty defaults for any field missing from the payload, so mandatory checks fire progressively as a form is filled in. For an existing record (`UPDATE`), untouched fields always keep their persisted values regardless of this setting. |
+| `enable:capdomain:autoErase` | `true` | Nulls out a field's value as soon as its field control becomes ReadOnly/Hidden. |
+| `enable:capdomain:defaultFCValue` | `3` (Optional) | Fallback field control value used when a field has no explicit calculator. |
+| `enable:capdomain:blockUnannotatedValueChanges` | `true` | Drops any incoming field that has no `@Common.FieldControl` annotation of its own. This is a strict, secure-by-default setting: every editable field - including plain "trigger" fields that only influence *other* fields' field control - must be annotated. |
 
 Per-entity `@FCSettings` annotations (`path`, `liveValidations`, `autoErase`,
 `blockUnannotatedValueChanges`, `useImpl`) override these environment defaults for that entity.
@@ -158,7 +158,7 @@ Validates data and throws errors if validation fails. Typical use in a `CREATE` 
 there is no generic update hook to bind to:
 
 ```javascript
-const { validateAndThowErrorsIfExists } = require('cap-fc');
+const { validateAndThowErrorsIfExists } = require('cap-domain');
 
 srv.on('CREATE', MyEntity, async (req, next) => {
   await validateAndThowErrorsIfExists(req, req.data, 'in');
@@ -170,7 +170,7 @@ srv.on('CREATE', MyEntity, async (req, next) => {
 Validates data and returns validation errors.
 
 ```javascript
-const { validateWithFCs } = require('cap-fc');
+const { validateWithFCs } = require('cap-domain');
 
 const errors = await validateWithFCs(req, req.data, { csnEntity, context = {} });
 
@@ -192,7 +192,7 @@ if (errors.length > 0) {
 Calculates field control values for entities.
 
 ```javascript
-const { calculateFieldControls } = require('cap-fc');
+const { calculateFieldControls } = require('cap-domain');
 
 const entityWithFCs = await calculateFieldControls(entity, req, { 
   csnEntity: MyEntity, // optional, req.target will be used by default
@@ -204,7 +204,7 @@ const entityWithFCs = await calculateFieldControls(entity, req, {
 Executes READ handler for field control calculation.
 
 ```javascript
-const { execAfterREADHandler } = require('cap-fc');
+const { execAfterREADHandler } = require('cap-domain');
 
 srv.after('READ', MyEntity, execAfterREADHandler);
 ```
@@ -213,7 +213,7 @@ srv.after('READ', MyEntity, execAfterREADHandler);
 Executes UPDATE handler with field control validation.
 
 ```javascript
-const { execUPDATEHandler } = require('cap-fc');
+const { execUPDATEHandler } = require('cap-domain');
 
 srv.on('UPDATE', MyEntity, execUPDATEHandler);
 ```
@@ -221,7 +221,7 @@ srv.on('UPDATE', MyEntity, execUPDATEHandler);
 
 #### `Utils`
 ```javascript
-const { Utils } = require('cap-fc');
+const { Utils } = require('cap-domain');
 
 const message = Utils.getText('validation.required', ['dynamic field value']);
 const entityName = Utils.getEntityName(csnEntity);

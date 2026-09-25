@@ -21,11 +21,11 @@
  * Cds configs:
  *
  * "cds": {
- *  "enable:capfc:plugin": true,
- *  "enable:capfc:liveValidations": false,
- *  "enable:capfc:autoErase": false,
- *  "enable:capfc:defaultFCValue": 3,
- *  "enable:capfc:blockUnannotatedValueChanges": true,
+ *  "enable:capdomain:plugin": true,
+ *  "enable:capdomain:liveValidations": false,
+ *  "enable:capdomain:autoErase": false,
+ *  "enable:capdomain:defaultFCValue": 3,
+ *  "enable:capdomain:blockUnannotatedValueChanges": true,
  * }
  */
 
@@ -35,9 +35,9 @@
  */
 
 const FCSettings = {
-  autoErase: cds.env['enable:capfc:autoErase'] ?? true,
-  liveValidations: cds.env['enable:capfc:liveValidations'] ?? true,
-  blockUnannotatedValueChanges: cds.env['enable:capfc:blockUnannotatedValueChanges'] ?? true,
+  autoErase: cds.env['enable:capdomain:autoErase'] ?? true,
+  liveValidations: cds.env['enable:capdomain:liveValidations'] ?? true,
+  blockUnannotatedValueChanges: cds.env['enable:capdomain:blockUnannotatedValueChanges'] ?? true,
   useImpl: {}
 };
 

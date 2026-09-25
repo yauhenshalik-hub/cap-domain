@@ -1,5 +1,5 @@
 {
-  "name": "cap-fc-showcase",
+  "name": "cap-domain-showcase",
   "version": "1.0.0",
   "description": "A simple CAP project.",
   "repository": "<Add your repository here>",
@@ -7,7 +7,7 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^10.1.1",
-    "cap-fc": "file:..",
+    "cap-domain": "file:..",
     "express": "^4"
   },
   "devDependencies": {
@@ -23,7 +23,7 @@
     "test": "jest --silent=true"
   },
   "cds": {
-    "enable:capfc:plugin": true,
+    "enable:capdomain:plugin": true,
     "requires": {},
     "log": {
       "levels": {

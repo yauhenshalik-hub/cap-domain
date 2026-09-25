@@ -1,4 +1,4 @@
-const { fieldControlDictionary } = require('cap-fc');
+const { fieldControlDictionary } = require('cap-domain');
 
 const fieldControlConfigurations = {
     title: {

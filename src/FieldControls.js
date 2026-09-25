@@ -21,7 +21,7 @@ const fieldControlDictionary = {
   Hidden: 0
 };
 
-const defaultEnvFC = Number(cds.env['enable:capfc:defaultFCValue'] ?? fieldControlDictionary.Optional);
+const defaultEnvFC = Number(cds.env['enable:capdomain:defaultFCValue'] ?? fieldControlDictionary.Optional);
 
 /**
  * Calculate field control for a specific field.
@@ -244,14 +244,14 @@ class FieldControls {
         if (fcValue <= fieldControlDictionary.ReadOnly && rawUpdate.hasOwnProperty(key) && previousData[key] !== entityValue) {
           fieldErrors.push({
             fieldName: key,
-            message: i18n.getText('capfc.validation.message.readOnly', [ label ])
+            message: i18n.getText('capdomain.validation.message.readOnly', [ label ])
           });
         }
 
         if ((entityValue === null || entityValue === '') && fcValue === fieldControlDictionary.Mandatory) {
           fieldErrors.push({
             fieldName: key,
-            message: i18n.getText('capfc.validation.message.required', [ label ])
+            message: i18n.getText('capdomain.validation.message.required', [ label ])
           });
         }
 
